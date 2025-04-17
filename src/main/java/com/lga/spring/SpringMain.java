@@ -17,5 +17,10 @@ public class SpringMain {
 
         // 3. 调用bean的方法
         System.out.println(accountService.queryAccountName("1"));
+
+
+        PropertiesConfig propertiesConfig = context.getBean(PropertiesConfig.class);
+        System.out.println(propertiesConfig.getUsername());
+
     }
 }
