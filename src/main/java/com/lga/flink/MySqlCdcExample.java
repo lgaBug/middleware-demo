@@ -14,12 +14,13 @@ public class MySqlCdcExample {
 
         // 配置 MySQL CDC 源
         MySqlSource<String> mySqlSource = MySqlSource.<String>builder()
-                .hostname("localhost")         // MySQL 主机名
+                .hostname("192.168.31.9")         // MySQL 主机名
                 .port(3306)                   // MySQL 端口
-                .databaseList("test_db")      // 要监控的数据库，多个用逗号分隔
-                .tableList("test_db.users")   // 要监控的表，格式为"数据库.表名"，多个用逗号分隔
-                .username("flink_cdc")        // MySQL 用户名
-                .password("password")         // MySQL 密码
+                .databaseList("flinkCDC")      // 要监控的数据库，多个用逗号分隔
+                .tableList("flinkCDC.users")   // 要监控的表，格式为"数据库.表名"，多个用逗号分隔
+                .username("root")        // MySQL 用户名
+                .password("123456")         // MySQL 密码
+                .serverTimeZone("UTC")
                 .deserializer(new com.ververica.cdc.debezium.JsonDebeziumDeserializationSchema()) // 使用 JSON 格式进行反序列化
                 .startupOptions(StartupOptions.initial()) // 从头开始读取历史数据
                 .build();
