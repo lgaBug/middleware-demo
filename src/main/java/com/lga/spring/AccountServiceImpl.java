@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +22,12 @@ public class AccountServiceImpl implements AccountService, InitializingBean, Dis
 
     @Autowired
     private AccountDao accountDao;
+
+
+    @Autowired
+    private ApplicationEventPublisher publisher;
+
+
 
 
     public AccountServiceImpl() {
@@ -42,5 +50,15 @@ public class AccountServiceImpl implements AccountService, InitializingBean, Dis
     @Override
     public void afterPropertiesSet() throws Exception {
         System.out.println("afterPropertiesSet");
+
+        PaidEvent paidEvent = new PaidEvent(this);
+        paidEvent.setUserId("lga");
+        paidEvent.setOrderId("123");
+        publisher.publishEvent(paidEvent);
+        System.out.println("paidEvent = " + paidEvent);
+
+
+
+
     }
 }
